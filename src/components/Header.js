@@ -1,0 +1,35 @@
+// src/components/Header.js
+import { Link } from "react-router-dom";
+
+export default function Header() {
+    return (
+        <header style={{
+            backgroundColor: "#333",
+            color: "white",
+            padding: "15px 30px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+        }}>
+            <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                {/* Menu da esquerda */}
+                <nav>
+                    <Link to="/listar" style={linkStyle}>Listar Contas</Link>
+                    <Link to="/cadastrar" style={linkStyle}>Cadastrar Conta</Link>
+                    <Link to="/editar" style={linkStyle}>Editar Conta</Link>
+                </nav>
+
+                {/* Botão de sair alinhado à direita */}
+                <div>
+                    <Link to="/login" style={{ ...linkStyle, marginLeft: "40px", color: "#ffcccc" }}>Sair</Link>
+                </div>
+            </div>
+        </header>
+    );
+}
+
+const linkStyle = {
+    color: "white",
+    textDecoration: "none",
+    marginLeft: "20px"
+};

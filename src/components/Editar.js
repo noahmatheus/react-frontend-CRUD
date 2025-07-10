@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import BotaoVoltar from "../BotaoVoltar";
 import EditarFormulario from "../EditarFormulario";
 import ExcluirFormulario from "../ExcluirFormulario";
 
@@ -8,7 +9,7 @@ function Editar() {
     const [modo, setModo] = useState(null); // "editar" ou "excluir"
     const [erro, setErro] = useState("");
 
-    const carregarContas = () => {
+    const carregarContas = useCallback(() => {
         const token = localStorage.getItem("token");
 
         fetch("http://vps.plenusti.com.br:61346/cosmos/api/conta/", {
@@ -16,17 +17,19 @@ function Editar() {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then((res) => {
-                if (!res.ok) throw new Error("Erro ao carregar contas");
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao carregar contas");
+                }
                 return res.json();
             })
-            .then((data) => setContas(data))
+            .then(data => setContas(data))
             .catch(() => setErro("Erro ao carregar contas"));
-    };
+    }, []);
 
     useEffect(() => {
         carregarContas();
-    }, []);
+    }, [carregarContas]);
 
     const selecionarParaEditar = (conta) => {
         setContaSelecionada(conta);
@@ -43,43 +46,60 @@ function Editar() {
         setModo(null);
     };
 
-    // Função que será chamada após a atualização para recarregar e limpar a seleção
-    const atualizaListaEFechaFormulario = () => {
-        carregarContas();
-        cancelar();
-    };
-
     return (
         <div style={{ padding: "20px" }}>
             <h2>Editar/Excluir Contas</h2>
             {erro && <p style={{ color: "red" }}>{erro}</p>}
 
             {!contaSelecionada ? (
-                <ul>
-                    {contas.map((conta) => (
-                        <li key={conta.id_conta} style={{ marginBottom: "8px" }}>
-                            {conta.nome} ({conta.login}){" "}
-                            <button onClick={() => selecionarParaEditar(conta)}>Editar</button>{" "}
-                            <button onClick={() => selecionarParaExcluir(conta)}>Excluir</button>
-                        </li>
-                    ))}
-                </ul>
+                <table border="1" cellPadding="5" style={{ marginTop: "20px", borderCollapse: "collapse", width: "100%" }}>
+                    <thead style={{ backgroundColor: "#f2f2f2" }}>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {contas.map((conta) => (
+                            <tr key={conta.id_conta}>
+                                <td>{conta.id_conta}</td>
+                                <td>{conta.nome}</td>
+                                <td>{conta.login}</td>
+                                <td>
+                                    <button onClick={() => selecionarParaEditar(conta)} style={{ marginRight: "5px" }}>
+                                        Editar
+                                    </button>
+                                    <button onClick={() => selecionarParaExcluir(conta)} style={{ color: "red" }}>
+                                        Excluir
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             ) : modo === "editar" ? (
                 <EditarFormulario
                     conta={contaSelecionada}
                     onCancel={cancelar}
-                    onUpdate={atualizaListaEFechaFormulario}
+                    onUpdate={() => {
+                        carregarContas();
+                        cancelar();
+                    }}
                 />
             ) : (
                 <ExcluirFormulario
                     conta={contaSelecionada}
-                    onCancel={cancelar}
+                    onCancelar={cancelar}
                     onExclusaoSucesso={() => {
                         carregarContas();
                         cancelar();
                     }}
                 />
             )}
+
+            <BotaoVoltar />
         </div>
     );
 }

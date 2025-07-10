@@ -1,12 +1,8 @@
-import { Link } from "react-router-dom";
-
 function Home() {
     return (
-        <div style={{ padding: "20px" }}>
-            <h1>Home</h1>
-            <nav>
-                <Link to="/listar">Listar Contas</Link> | <Link to="/cadastrar">Cadastrar Conta</Link> | <Link to="/editar">Editar Conta</Link> | <Link to="/login">Sair</Link>
-            </nav>
+        <div style={{ fontFamily: "'Poppins', sans-serif", padding: "40px" }}>
+            <h2>Bem-vindo!</h2>
+            <p>Utilize o menu acima para navegar pelo sistema.</p>
         </div>
     );
 }

@@ -1,58 +1,63 @@
 import { useEffect, useState } from "react";
+import BotaoVoltar from "../BotaoVoltar";
 
-function ListaContas() {
+function ListarContas({ onEditar, onExcluir }) {
     const [contas, setContas] = useState([]);
     const [erro, setErro] = useState("");
 
-    useEffect(() => {
+    const carregarContas = async () => {
         const token = localStorage.getItem("token");
 
-        fetch("http://vps.plenusti.com.br:61346/cosmos/api/conta/", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+        try {
+            const response = await fetch("http://vps.plenusti.com.br:61346/cosmos/api/conta/", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao carregar contas");
             }
-        })
-            .then(async (res) => {
-                if (!res.ok) {
-                    const data = await res.json();
-                    throw new Error(data.message || "Erro ao buscar contas");
-                }
-                return res.json();
-            })
-            .then((data) => setContas(data))
-            .catch((err) => setErro(err.message));
+
+            const data = await response.json();
+            setContas(data);
+        } catch (err) {
+            setErro("Erro ao carregar contas");
+        }
+    };
+
+    useEffect(() => {
+        carregarContas();
     }, []);
 
     return (
-        <div>
+        <div style={{ padding: "20px" }}>
             <h2>Lista de Contas</h2>
             {erro && <p style={{ color: "red" }}>{erro}</p>}
-            <table border="1" cellPadding="5">
-                <thead>
+
+            <table border="1" cellPadding="5" style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead style={{ backgroundColor: "#f2f2f2" }}>
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Login</th>
-                        <th>Email</th>
-                        <th>Since</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {contas.map(({ id_conta, nome, login, email, since }) => (
+                    {contas.map(({ id_conta, nome, login }) => (
                         <tr key={id_conta}>
                             <td>{id_conta}</td>
                             <td>{nome}</td>
                             <td>{login}</td>
-                            <td>{email}</td>
-                            <td>{since}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            <BotaoVoltar />
         </div>
     );
 }
 
-export default ListaContas;
+export default ListarContas;
