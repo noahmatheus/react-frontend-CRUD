@@ -92,7 +92,10 @@ function Cadastrar() {
                     padding: "10px 15px",
                     border: "none",
                     borderRadius: "5px",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px"
                 }}
             >
                 Cadastrar

@@ -17,6 +17,7 @@ export default function Header() {
                     <Link to="/listar" style={linkStyle}>Listar Contas</Link>
                     <Link to="/cadastrar" style={linkStyle}>Cadastrar Conta</Link>
                     <Link to="/editar" style={linkStyle}>Editar Conta</Link>
+                    <Link to="/selecionar-agente" style={linkStyle}>Treinar Agente</Link>
                 </nav>
 
                 {/* Botão de sair alinhado à direita */}
