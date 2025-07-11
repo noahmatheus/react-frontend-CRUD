@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import BotaoVoltar from "../BotaoVoltar";
 
 function Cadastrar() {
     const [nome, setNome] = useState("");
     const [login, setLogin] = useState("");
     const [senha, setSenha] = useState("");
+
+    const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
 
@@ -37,73 +40,90 @@ function Cadastrar() {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
-            <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px" }}>Nome:</label>
-                <input
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    required
-                    style={{
-                        width: "100%",
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: "1px solid #ccc"
-                    }}
-                />
-            </div>
+        <div style={{ padding: "20px" }}>
+            <h2>Cadastrar Conta</h2>
+            <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
+                <div style={{ marginBottom: "15px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Nome:</label>
+                    <input
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                        required
+                        style={{
+                            width: "100%",
+                            padding: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid #ccc"
+                        }}
+                    />
+                </div>
 
-            <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px" }}>Login:</label>
-                <input
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                    required
-                    style={{
-                        width: "100%",
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: "1px solid #ccc"
-                    }}
-                />
-            </div>
+                <div style={{ marginBottom: "15px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Login:</label>
+                    <input
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                        required
+                        style={{
+                            width: "100%",
+                            padding: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid #ccc"
+                        }}
+                    />
+                </div>
 
-            <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px" }}>Senha:</label>
-                <input
-                    type="password"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                    required
-                    style={{
-                        width: "100%",
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: "1px solid #ccc"
-                    }}
-                />
-            </div>
+                <div style={{ marginBottom: "15px" }}>
+                    <label style={{ display: "block", marginBottom: "5px" }}>Senha:</label>
+                    <input
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                        style={{
+                            width: "100%",
+                            padding: "8px",
+                            borderRadius: "4px",
+                            border: "1px solid #ccc"
+                        }}
+                    />
+                </div>
 
-            <button
-                type="submit"
-                style={{
-                    backgroundColor: "#007bff",
-                    color: "#fff",
-                    padding: "10px 15px",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px"
-                }}
-            >
-                Cadastrar
-            </button>
+                <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+                    <button
+                        type="submit"
+                        style={{
+                            backgroundColor: "#007bff",
+                            color: "#fff",
+                            padding: "10px 15px",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            flex: 1
+                        }}
+                    >
+                        Cadastrar
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => { navigate(-1); }}
+                        style={{
+                            backgroundColor: "#6c757d",
+                            color: "#fff",
+                            padding: "10px 15px",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            flex: 1
+                        }}
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </form>
 
             <BotaoVoltar />
-        </form>
-
+        </div>
     );
 }
 
