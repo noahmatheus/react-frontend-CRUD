@@ -31,41 +31,6 @@ function EditarFormulario({ conta, onCancel, onUpdate }) {
         }
     };
 
-    // RETORNO ANTIGO
-    // return (
-    //     <div style={{ marginTop: "20px" }}>
-    //         <h3>Editando: {conta.nome}</h3>
-    //         <div>
-    //             <label>Nome:</label>
-    //             <input
-    //                 type="text"
-    //                 value={nome}
-    //                 onChange={(e) => setNome(e.target.value)}
-    //             />
-    //         </div>
-    //         <div>
-    //             <label>Login:</label>
-    //             <input
-    //                 type="text"
-    //                 value={login}
-    //                 onChange={(e) => setLogin(e.target.value)}
-    //             />
-    //         </div>
-    //         <div>
-    //             <label>Nova Senha:</label>
-    //             <input
-    //                 type="password"
-    //                 value={senha}
-    //                 onChange={(e) => setSenha(e.target.value)}
-    //             />
-    //         </div>
-    //         <button onClick={handleSalvar}>Salvar</button>
-    //         <button onClick={onCancel} style={{ marginLeft: "10px" }}>
-    //             Cancelar
-    //         </button>
-    //     </div>
-    // );
-
     return (
         <div style={{ maxWidth: 400, margin: "20px auto" }}>
             <h3 style={{ marginBottom: "20px" }}>Editando: {conta.nome}</h3>

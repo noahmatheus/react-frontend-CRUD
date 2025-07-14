@@ -154,7 +154,7 @@ function Editar() {
             ) : (
                 <ExcluirFormulario
                     conta={contaSelecionada}
-                    onCancelar={cancelar}
+                    onCancel={cancelar}
                     onExclusaoSucesso={() => {
                         carregarContas();
                         cancelar();

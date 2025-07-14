@@ -22,12 +22,44 @@ function ExcluirFormulario({ conta, onCancel, onExclusaoSucesso }) {
     };
 
     return (
+        // <div style={{ marginTop: "20px" }}>
+        //     <h3>Deseja excluir a conta "{conta.nome}"?</h3>
+        //     <button onClick={handleExcluir} style={{ marginRight: "10px", background: "red", color: "white" }}>
+        //         Confirmar Exclusão
+        //     </button>
+        //     <button onClick={onCancel}>Cancelar</button>
+        // </div>
+        // novo manual
         <div style={{ marginTop: "20px" }}>
             <h3>Deseja excluir a conta "{conta.nome}"?</h3>
-            <button onClick={handleExcluir} style={{ marginRight: "10px", background: "red", color: "white" }}>
-                Confirmar Exclusão
-            </button>
-            <button onClick={onCancel}>Cancelar</button>
+            <div style={{ display: "flex", gap: "10px" }}>
+                <button
+                    onClick={handleExcluir}
+                    style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        padding: "10px 15px",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        flex: 1
+                    }}>
+                    Confirmar Exclusão
+                </button>
+                <button
+                    onClick={onCancel}
+                    style={{
+                        backgroundColor: "#6c757d",
+                        color: "#fff",
+                        padding: "10px 15px",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        flex: 1
+                    }}>
+                    Cancelar
+                </button>
+            </div>
         </div>
     );
 }
