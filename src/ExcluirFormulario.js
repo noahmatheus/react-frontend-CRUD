@@ -4,7 +4,7 @@ function ExcluirFormulario({ conta, onCancel, onExclusaoSucesso }) {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://vps.plenusti.com.br:61346/cosmos/api/conta/${conta.id_conta}`, {
+            const res = await fetch(`https://renderproject-deploy.onrender.com/api/user/${conta.id_user}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

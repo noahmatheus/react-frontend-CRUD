@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import BotaoVoltar from "../BotaoVoltar";
 
-function ListarContas({ onEditar, onExcluir }) {
-    const [contas, setContas] = useState([]);
+function ListarAdicional() {
+    const [adicional, setAdicional] = useState([]);
     const [erro, setErro] = useState("");
 
-    const carregarContas = async () => {
+    const carregarAdicional = async () => {
         const token = localStorage.getItem("token");
 
         try {
-            const response = await fetch("https://renderproject-deploy.onrender.com/api/user/", {
+            const response = await fetch("https://renderproject-deploy.onrender.com/api/adicional/", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -17,23 +17,23 @@ function ListarContas({ onEditar, onExcluir }) {
             });
 
             if (!response.ok) {
-                throw new Error("Erro ao carregar contas");
+                throw new Error("Erro ao carregar adicional");
             }
 
             const data = await response.json();
-            setContas(data);
+            setAdicional(data);
         } catch (err) {
-            setErro("Erro ao carregar contas");
+            setErro("Erro ao carregar adicional");
         }
     };
 
     useEffect(() => {
-        carregarContas();
+        carregarAdicional();
     }, []);
 
     return (
         <div style={{ padding: "20px" }}>
-            <h2>Lista de Contas</h2>
+            <h2>Lista de Adicional</h2>
             {erro && <p style={{ color: "red" }}>{erro}</p>}
 
             <table border="1" cellPadding="5" style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -41,15 +41,15 @@ function ListarContas({ onEditar, onExcluir }) {
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Login</th>
+                        <th>Preço</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {contas.map(({ id_user, name, email }) => (
-                        <tr key={id_user}>
-                            <td>{id_user}</td>
-                            <td>{name}</td>
-                            <td>{email}</td>
+                    {adicional.map(({ id_adicional, nome, valor }) => (
+                        <tr key={id_adicional}>
+                            <td>{id_adicional}</td>
+                            <td>{nome}</td>
+                            <td>R$ {valor?.toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -60,4 +60,4 @@ function ListarContas({ onEditar, onExcluir }) {
     );
 }
 
-export default ListarContas;
+export default ListarAdicional;

@@ -13,7 +13,7 @@ function Editar() {
     const carregarContas = useCallback(() => {
         const token = localStorage.getItem("token");
 
-        fetch("http://vps.plenusti.com.br:61346/cosmos/api/conta/", {
+        fetch("https://renderproject-deploy.onrender.com/api/user/", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -49,7 +49,7 @@ function Editar() {
 
     // Lista filtrada pela string do filtro (ignora case)
     const contasFiltradas = contas.filter(conta =>
-        conta.nome.toLowerCase().includes(filtroNome.toLowerCase())
+        conta.name.toLowerCase().includes(filtroNome.toLowerCase())
     );
 
     return (
@@ -93,10 +93,10 @@ function Editar() {
                         </thead>
                         <tbody>
                             {contasFiltradas.map(conta => (
-                                <tr key={conta.id_conta}>
-                                    <td>{conta.id_conta}</td>
-                                    <td>{conta.nome}</td>
-                                    <td>{conta.login}</td>
+                                <tr key={conta.id_user}>
+                                    <td>{conta.id_user}</td>
+                                    <td>{conta.name}</td>
+                                    <td>{conta.email}</td>
                                     <td>
                                         <button
                                             onClick={() => selecionarParaEditar(conta)}

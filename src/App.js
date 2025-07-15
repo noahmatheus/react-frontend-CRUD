@@ -4,6 +4,7 @@ import Cadastrar from "./components/Cadastrar";
 import Editar from "./components/Editar";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
+import ListarAdicional from "./components/ListarAdicional";
 import ListarContas from "./components/ListarContas";
 import ListarProdutos from "./components/ListarProdutos";
 import Login from "./components/Login";
@@ -26,8 +27,9 @@ function App() {
           <Route path="/listar" element={<ListarContas />} />
           <Route path="/cadastrar" element={<Cadastrar />} />
           <Route path="/editar" element={<Editar />} />
-          <Route path="/selecionar-agente" element={<SelecionarAgente />} /> {/* 👈 nova rota */}
-          <Route path="/listar-produtos" element={<ListarProdutos />} /> {/* 👈 nova rota */}
+          <Route path="/selecionar-agente" element={<SelecionarAgente />} />
+          <Route path="/listar-produtos" element={<ListarProdutos />} />
+          <Route path="/listar-adicional" element={<ListarAdicional />} />
         </Route>
 
         {/* Qualquer rota não encontrada → redireciona para login */}

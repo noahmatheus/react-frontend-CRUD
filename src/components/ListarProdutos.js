@@ -9,11 +9,11 @@ function ListarProdutos() {
         const token = localStorage.getItem("token");
 
         try {
-            const response = await fetch("https://renderproject-deploy.onrender.com/api/produtos/produtosnoauth", {
+            const response = await fetch("https://renderproject-deploy.onrender.com/api/produtos/", {
                 method: "GET",
-                // headers: {
-                //     Authorization: `Bearer ${token}`,
-                // },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             if (!response.ok) {

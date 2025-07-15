@@ -1,11 +1,12 @@
+import dayjs from 'dayjs';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import BotaoVoltar from "../BotaoVoltar";
 
 function Cadastrar() {
-    const [nome, setNome] = useState("");
-    const [login, setLogin] = useState("");
-    const [senha, setSenha] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
 
     const navigate = useNavigate();
 
@@ -14,25 +15,26 @@ function Cadastrar() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch("http://vps.plenusti.com.br:61346/cosmos/api/conta/", {
+        fetch("https://renderproject-deploy.onrender.com/api/user/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                nome,
-                login,
-                senha,
+                name,
+                email,
+                pass,
+                since: dayjs().format('DD/MM/YYYY HH:mm:ss'),
             }),
         })
             .then(async (res) => {
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || "Erro ao cadastrar");
                 alert("Conta cadastrada com sucesso!");
-                setNome("");
-                setLogin("");
-                setSenha("");
+                setName("");
+                setEmail("");
+                setPass("");
             })
             .catch((err) => {
                 alert("Erro: " + err.message);
@@ -46,8 +48,8 @@ function Cadastrar() {
                 <div style={{ marginBottom: "15px" }}>
                     <label style={{ display: "block", marginBottom: "5px" }}>Nome:</label>
                     <input
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                         style={{
                             width: "100%",
@@ -61,8 +63,8 @@ function Cadastrar() {
                 <div style={{ marginBottom: "15px" }}>
                     <label style={{ display: "block", marginBottom: "5px" }}>Login:</label>
                     <input
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{
                             width: "100%",
@@ -77,8 +79,8 @@ function Cadastrar() {
                     <label style={{ display: "block", marginBottom: "5px" }}>Senha:</label>
                     <input
                         type="password"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
+                        value={pass}
+                        onChange={(e) => setPass(e.target.value)}
                         required
                         style={{
                             width: "100%",

@@ -1,21 +1,23 @@
+import dayjs from 'dayjs';
 import { useState } from "react";
 
 function EditarFormulario({ conta, onCancel, onUpdate }) {
-    const [nome, setNome] = useState(conta.nome);
-    const [senha, setSenha] = useState("");
-    const [login, setLogin] = useState(conta.login);
+    const [name, setName] = useState(conta.name);
+    const [pass, setPass] = useState("");
+    const [email, setEmail] = useState(conta.email);
+    // const [since, setEmail] = useState(conta.email);
 
     const handleSalvar = async () => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://vps.plenusti.com.br:61346/cosmos/api/conta/${conta.id_conta}`, {
+            const res = await fetch(`https://renderproject-deploy.onrender.com/api/user/${conta.id_user}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ nome, senha, login }),
+                body: JSON.stringify({ name, pass, email, since: dayjs().format('DD/MM/YYYY HH:mm:ss') }),
             });
 
             if (res.ok) {
@@ -33,14 +35,14 @@ function EditarFormulario({ conta, onCancel, onUpdate }) {
 
     return (
         <div style={{ maxWidth: 400, margin: "20px auto" }}>
-            <h3 style={{ marginBottom: "20px" }}>Editando: {conta.nome}</h3>
+            <h3 style={{ marginBottom: "20px" }}>Editando: {conta.name}</h3>
 
             <div style={{ marginBottom: "15px" }}>
                 <label style={{ display: "block", marginBottom: "5px" }}>Nome:</label>
                 <input
                     type="text"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     style={{
                         width: "100%",
                         padding: "8px",
@@ -54,8 +56,8 @@ function EditarFormulario({ conta, onCancel, onUpdate }) {
                 <label style={{ display: "block", marginBottom: "5px" }}>Login:</label>
                 <input
                     type="text"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     style={{
                         width: "100%",
                         padding: "8px",
@@ -69,8 +71,8 @@ function EditarFormulario({ conta, onCancel, onUpdate }) {
                 <label style={{ display: "block", marginBottom: "5px" }}>Nova Senha:</label>
                 <input
                     type="password"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
                     style={{
                         width: "100%",
                         padding: "8px",

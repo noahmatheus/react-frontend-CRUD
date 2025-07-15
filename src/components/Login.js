@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 function Login({ onLogin }) {
-    const [login, setLogin] = useState("");
-    const [senha, setSenha] = useState("");
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
     const [erro, setErro] = useState("");
 
     const handleSubmit = async (e) => {
@@ -10,12 +10,12 @@ function Login({ onLogin }) {
         setErro(""); // Limpa o erro anterior
 
         try {
-            const res = await fetch("http://vps.plenusti.com.br:61346/cosmos/login", {
+            const res = await fetch("https://renderproject-deploy.onrender.com/login", {
                 method: "POST",
                 // headers: {
                 //     "Content-Type": "application/json",
                 // },
-                body: JSON.stringify({ login, senha }),
+                body: JSON.stringify({ email, pass }),
             });
 
             const contentType = res.headers.get("Content-Type");
@@ -65,9 +65,9 @@ function Login({ onLogin }) {
                     <label style={{ display: "block", marginBottom: "6px", color: "#555" }}>Usuário:</label>
                     <input
                         type="text"
-                        value={login}
+                        value={email}
                         // placeholder="Usuário"
-                        onChange={(e) => setLogin(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{
                             width: "100%",
@@ -85,9 +85,9 @@ function Login({ onLogin }) {
                     <label style={{ display: "block", marginBottom: "6px", color: "#555" }}>Senha:</label>
                     <input
                         type="password"
-                        value={senha}
+                        value={pass}
                         // placeholder="Senha"
-                        onChange={(e) => setSenha(e.target.value)}
+                        onChange={(e) => setPass(e.target.value)}
                         required
                         style={{
                             width: "100%",
