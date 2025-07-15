@@ -1,67 +1,67 @@
 import { useCallback, useEffect, useState } from "react";
 import BotaoVoltar from "../BotaoVoltar";
-import CadastrarFormularioAdicional from "../CadastrarFormularioAdicional";
-import EditarFormularioAdicional from "../EditarFormularioAdicional";
-import ExcluirFormularioAdicional from "../ExcluirFormularioAdicional";
+import CadastrarFormularioCatalogo from "../CadastrarFormularioCatalogo";
+import EditarFormularioCatalogo from "../EditarFormularioCatalogo";
+import ExcluirFormularioCatalogo from "../ExcluirFormularioCatalogo";
 
-function EditarAdicional() {
-    const [adicional, setAdicional] = useState([]);
+function EditarCatalogo() {
+    const [catalogo, setCatalogo] = useState([]);
     const [filtroNome, setFiltroNome] = useState(""); // estado para o filtro
-    const [adicionalSelecionado, setAdicionalSelecionado] = useState(null);
+    const [catalogoSelecionado, setCatalogoSelecionado] = useState(null);
     const [modo, setModo] = useState(null); // "editar" ou "excluir"
     const [erro, setErro] = useState("");
 
-    const carregarAdicional = useCallback(() => {
+    const carregarCatalogo = useCallback(() => {
         const token = localStorage.getItem("token");
 
-        fetch("https://renderproject-deploy.onrender.com/api/adicional/", {
+        fetch("https://renderproject-deploy.onrender.com/api/catalogo/", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
             .then(res => {
                 if (!res.ok) {
-                    throw new Error("Erro ao carregar adicional");
+                    throw new Error("Erro ao carregar catalogo");
                 }
                 return res.json();
             })
-            .then(data => setAdicional(data))
-            .catch(() => setErro("Erro ao carregar adicional"));
+            .then(data => setCatalogo(data))
+            .catch(() => setErro("Erro ao carregar catalogo"));
     }, []);
 
     useEffect(() => {
-        carregarAdicional();
-    }, [carregarAdicional]);
+        carregarCatalogo();
+    }, [carregarCatalogo]);
 
-    const selecionarParaEditar = (adicional) => {
-        setAdicionalSelecionado(adicional);
+    const selecionarParaEditar = (catalogo) => {
+        setCatalogoSelecionado(catalogo);
         setModo("editar");
     };
 
-    const selecionarParaExcluir = (adicional) => {
-        setAdicionalSelecionado(adicional);
+    const selecionarParaExcluir = (catalogo) => {
+        setCatalogoSelecionado(catalogo);
         setModo("excluir");
     };
 
     // novo
     const iniciarCadastro = () => {
-        setAdicionalSelecionado(null);
+        setCatalogoSelecionado(null);
         setModo("cadastrar");
     };
 
     const cancelar = () => {
-        setAdicionalSelecionado(null);
+        setCatalogoSelecionado(null);
         setModo(null);
     };
 
     // Lista filtrada pela string do filtro (ignora case)
-    const adicionalFiltrados = adicional.filter(adicional =>
-        adicional.nome.toLowerCase().includes(filtroNome.toLowerCase())
+    const catalogosFiltrados = catalogo.filter(catalogo =>
+        catalogo.nome.toLowerCase().includes(filtroNome.toLowerCase())
     );
 
     return (
         <div style={{ padding: "20px" }}>
-            <h2>Editar/Excluir/Cadastrar Adicional</h2>
+            <h2>Editar/Excluir/Cadastrar Catalogo</h2>
             {erro && <p style={{ color: "red" }}>{erro}</p>}
 
             {!modo ? (
@@ -80,12 +80,12 @@ function EditarAdicional() {
                             fontSize: "14px"
                         }}
                     >
-                        Cadastrar novo adicional
+                        Cadastrar novo catalogo
                     </button>
 
                     {/* Campo filtro */}
                     <div style={{ marginBottom: "15px" }}>
-                        <label htmlFor="filtroNome" style={{ marginRight: "8px" }}>Filtrar por nome adicional:</label>
+                        <label htmlFor="filtroNome" style={{ marginRight: "8px" }}>Filtrar por nome catalogo:</label>
                         <input
                             id="filtroNome"
                             type="text"
@@ -111,19 +111,17 @@ function EditarAdicional() {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Valor</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {adicionalFiltrados.map(adicional => (
-                                <tr key={adicional.id_adicional}>
-                                    <td>{adicional.id_adicional}</td>
-                                    <td>{adicional.nome}</td>
-                                    <td>{adicional.valor?.toFixed(2)}</td>
+                            {catalogosFiltrados.map(catalogo => (
+                                <tr key={catalogo.id_catalogo}>
+                                    <td>{catalogo.id_catalogo}</td>
+                                    <td>{catalogo.nome}</td>
                                     <td>
                                         <button
-                                            onClick={() => selecionarParaEditar(adicional)}
+                                            onClick={() => selecionarParaEditar(catalogo)}
                                             style={{
                                                 backgroundColor: "#007bff",
                                                 color: "#fff",
@@ -139,7 +137,7 @@ function EditarAdicional() {
                                         </button>
 
                                         <button
-                                            onClick={() => selecionarParaExcluir(adicional)}
+                                            onClick={() => selecionarParaExcluir(catalogo)}
                                             style={{
                                                 backgroundColor: "#dc3545",
                                                 color: "#fff",
@@ -155,10 +153,10 @@ function EditarAdicional() {
                                     </td>
                                 </tr>
                             ))}
-                            {adicionalFiltrados.length === 0 && (
+                            {catalogosFiltrados.length === 0 && (
                                 <tr>
                                     <td colSpan="5" style={{ textAlign: "center", padding: "10px" }}>
-                                        Nenhum adicional encontrado.
+                                        Nenhum catalogo encontrado.
                                     </td>
                                 </tr>
                             )}
@@ -166,29 +164,29 @@ function EditarAdicional() {
                     </table>
                 </>
             ) : modo === "editar" ? (
-                <EditarFormularioAdicional
-                    adicional={adicionalSelecionado}
+                <EditarFormularioCatalogo
+                    catalogo={catalogoSelecionado}
                     onCancel={cancelar}
                     onUpdate={() => {
-                        carregarAdicional();
+                        carregarCatalogo();
                         cancelar();
                     }}
                 />
             ) : modo === "cadastrar" ? (
-                <CadastrarFormularioAdicional
-                    adicional={null}
+                <CadastrarFormularioCatalogo
+                    catalogo={null}
                     onCancel={cancelar}
                     onCreate={() => {
-                        carregarAdicional();
+                        carregarCatalogo();
                         cancelar();
                     }}
                 />
             ) : (
-                <ExcluirFormularioAdicional
-                    adicional={adicionalSelecionado}
+                <ExcluirFormularioCatalogo
+                    catalogo={catalogoSelecionado}
                     onCancel={cancelar}
                     onExclusaoSucesso={() => {
-                        carregarAdicional();
+                        carregarCatalogo();
                         cancelar();
                     }}
                 />
@@ -200,4 +198,4 @@ function EditarAdicional() {
 
 }
 
-export default EditarAdicional;
+export default EditarCatalogo;

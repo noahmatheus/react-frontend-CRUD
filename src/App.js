@@ -3,6 +3,7 @@ import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-d
 import Cadastrar from "./components/Cadastrar";
 import Editar from "./components/Editar";
 import EditarAdicional from "./components/EditarAdicional";
+import EditarProduto from "./components/EditarProduto";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
 import ListarCatalogo from "./components/ListarCatalogo";
@@ -28,10 +29,7 @@ function App() {
           <Route path="/cadastrar" element={<Cadastrar />} />
           <Route path="/editar" element={<Editar />} />
           <Route path="/selecionar-agente" element={<SelecionarAgente />} />
-          {/* <Route path="/listar-produtos" element={<ListarProdutos />} /> */}
-          {/* <Route path="/listar-adicional" element={<ListarAdicional />} /> */}
           <Route path="/listar-catalogo" element={<ListarCatalogo />} />
-          {/* <Route path="/editar-produto" element={<EditarProduto />} /> */}
           <Route path="/crud-produto" element={<EditarProduto />} />
           <Route path="/crud-adicional" element={<EditarAdicional />} />
         </Route>
