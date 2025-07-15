@@ -18,8 +18,11 @@ export default function Header() {
                     <Link to="/cadastrar" style={linkStyle}>Cadastrar Conta</Link>
                     <Link to="/editar" style={linkStyle}>Editar Conta</Link>
                     <Link to="/selecionar-agente" style={linkStyle}>Treinar Agente</Link>
-                    <Link to="/listar-produtos" style={linkStyle}>Listar Produtos</Link>
                     <Link to="/listar-adicional" style={linkStyle}>Listar Adicional</Link>
+                    <Link to="/listar-catalogo" style={linkStyle}>Listar Catalogo</Link>
+                    {/* <Link to="/listar-produtos" style={linkStyle}>Listar Produtos</Link> */}
+                    {/* <Link to="/editar-produto" style={linkStyle}>Editar Produto</Link> */}
+                    <Link to="/crud-produto" style={linkStyle}>Produto</Link>
                 </nav>
 
                 {/* Botão de sair alinhado à direita */}

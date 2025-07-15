@@ -41,16 +41,16 @@ function ListarProdutos() {
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Preço</th>
+                        <th>Valor</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {produtos.map(({ id_produto, nome, preco, descricao }) => (
+                    {produtos.map(({ id_produto, nome, valor, descricao }) => (
                         <tr key={id_produto}>
                             <td>{id_produto}</td>
                             <td>{nome}</td>
-                            <td>R$ {preco?.toFixed(2)}</td>
+                            <td>R$ {valor?.toFixed(2)}</td>
                             <td>{descricao}</td>
                         </tr>
                     ))}
