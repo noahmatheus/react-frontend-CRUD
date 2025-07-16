@@ -19,12 +19,7 @@ function App() {
     <Router>
       <Routes>
         {/* Rota de login (fora do layout) */}
-
-        {/* // teste para o build   */}
-        {/* <Route path="/login" element={<Login onLogin={() => window.location.href = "/"} />} /> */}
-
-        <Route path="/login" element={<Login onLogin={() => window.location.href = "/#/"} />} />
-
+        <Route path="/login" element={<Login onLogin={() => window.location.href = "/"} />} />
 
         {/* Rotas protegidas com layout fixo */}
         <Route element={<ProtectedRoute token={token}><Layout /></ProtectedRoute>}>
