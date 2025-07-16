@@ -27,7 +27,6 @@ function Login() {
             }
 
             const data = await res.json();
-            console.log("🔁 Dados recebidos:", data);
 
             if (res.ok) {
                 const token = data.token || data.access_token;

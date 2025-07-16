@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumericFormat } from 'react-number-format';
 
 function EditarFormularioAdicional({ adicional, onCancel, onUpdate }) {
     const [nome, setNome] = useState(adicional.nome);
     const [valor, setValor] = useState(adicional.valor);
-    // const [since, setValor] = useState(adicional.valor);
+    const [catalogos, setCatalogos] = useState([]);
+    const [catalogoSelecionado, setCatalogoSelecionado] = useState("");
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        fetch("https://renderproject-deploy.onrender.com/api/catalogo/", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => setCatalogos(data))
+            .catch(err => console.error("Erro ao carregar catálogos:", err));
+    }, []);
 
     const handleSalvar = async () => {
+
+        if (!catalogoSelecionado) {
+            alert("Selecione um catálogo antes de cadastrar.");
+            return;
+        }
+
         const token = localStorage.getItem("token");
 
         try {
@@ -16,7 +37,7 @@ function EditarFormularioAdicional({ adicional, onCancel, onUpdate }) {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ id_adicional: adicional.id_adicional, nome, valor, catalogo_temp: adicional.catalogo_temp }),
+                body: JSON.stringify({ id_adicional: adicional.id_adicional, nome, valor, catalogo_temp: parseInt(catalogoSelecionado) }),
             });
 
             if (res.ok) {
@@ -77,6 +98,31 @@ function EditarFormularioAdicional({ adicional, onCancel, onUpdate }) {
                         />
                     )}
                 />
+            </div>
+
+            {/* Select de Catálogo */}
+            <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Catálogo:</label>
+                <select
+                    value={catalogoSelecionado}
+                    onChange={(e) => setCatalogoSelecionado(e.target.value)}
+                    required
+                    style={{
+                        width: "100%",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        border: "1px solid #ccc",
+                        marginBottom: "15px"
+                    }}
+                >
+                    <option value="">Selecione um catálogo</option>
+                    {catalogos.map(c => (
+                        <option key={c.id_catalogo} value={c.id_catalogo}>
+                            {c.nome}
+                        </option>
+                    ))}
+                </select>
+
             </div>
 
             <div style={{ display: "flex", gap: "10px" }}>
