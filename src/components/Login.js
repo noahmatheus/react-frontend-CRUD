@@ -1,20 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ importar o hook
 
-function Login({ onLogin }) {
+function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [erro, setErro] = useState("");
+    const navigate = useNavigate(); // ✅ instanciar o hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErro(""); // Limpa o erro anterior
+        setErro("");
 
         try {
             const res = await fetch("https://renderproject-deploy.onrender.com/login", {
                 method: "POST",
-                // headers: {
-                //     "Content-Type": "application/json",
-                // },
                 body: JSON.stringify({ email, pass }),
             });
 
@@ -33,8 +32,8 @@ function Login({ onLogin }) {
             if (res.ok) {
                 const token = data.token || data.access_token;
                 if (token) {
-                    localStorage.setItem("token", token); // Armazena token localmente
-                    onLogin(token); // Chama função recebida por props
+                    localStorage.setItem("token", token);
+                    navigate("/"); // ✅ redireciona para página inicial
                 } else {
                     setErro("Nome de usuário ou Senha inválidos.");
                 }

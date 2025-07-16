@@ -1,4 +1,4 @@
-import { Navigate, Route, HashRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import Cadastrar from "./components/Cadastrar";
 import Editar from "./components/Editar";
@@ -33,7 +33,7 @@ function App() {
         </Route>
 
         {/* Qualquer rota não encontrada → redireciona para login */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login onLogin={() => window.location.href = "/#/"} />} />
       </Routes>
     </Router>
   );

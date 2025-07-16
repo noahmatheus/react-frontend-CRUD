@@ -1,7 +1,14 @@
 // src/components/Header.js
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     return (
         <header style={{
             backgroundColor: "#333",
@@ -17,10 +24,6 @@ export default function Header() {
                     <Link to="/listar" style={linkStyle}>Listar Contas</Link>
                     <Link to="/cadastrar" style={linkStyle}>Cadastrar Conta</Link>
                     <Link to="/editar" style={linkStyle}>Editar Conta</Link>
-                    {/* <Link to="/listar-catalogo" style={linkStyle}>Listar Catalogo</Link> */}
-                    {/* <Link to="/listar-produtos" style={linkStyle}>Listar Produtos</Link> */}
-                    {/* <Link to="/listar-adicional" style={linkStyle}>Listar Adicional</Link> */}
-                    {/* <Link to="/editar-produto" style={linkStyle}>Editar Produto</Link> */}
                     <Link to="/crud-catalogo" style={linkStyle}>Catalogos</Link>
                     <Link to="/crud-produto" style={linkStyle}>Produtos</Link>
                     <Link to="/crud-adicional" style={linkStyle}>Adicionais</Link>
@@ -28,7 +31,9 @@ export default function Header() {
 
                 {/* Botão de sair alinhado à direita */}
                 <div>
-                    <Link to="/login" style={{ ...linkStyle, marginLeft: "40px", color: "#ffcccc" }}>Sair</Link>
+                    <button onClick={handleLogout} style={{ ...linkStyle, marginLeft: "40px", color: "#ffcccc", background: "none", border: "none", cursor: "pointer" }}>
+                        Sair
+                    </button>
                 </div>
             </div>
         </header>
