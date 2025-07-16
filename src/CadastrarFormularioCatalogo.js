@@ -19,10 +19,7 @@ function CadastrarFormularioCatalogo() {
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                nome,
-                valor,
-                catalogo_temp: 1,
-                // fix arrumar depois
+                nome
             }),
         })
             .then(async (res) => {
@@ -30,7 +27,6 @@ function CadastrarFormularioCatalogo() {
                 if (!res.ok) throw new Error(data.message || "Erro ao cadastrar");
                 alert("Catalogo cadastrado com sucesso!");
                 setNome("");
-                setValor("");
             })
             .catch((err) => {
                 alert("Erro: " + err.message);
