@@ -1,4 +1,4 @@
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import Cadastrar from "./components/Cadastrar";
 import Editar from "./components/Editar";
@@ -10,7 +10,6 @@ import Layout from "./components/Layout";
 import ListarContas from "./components/ListarContas";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import SelecionarAgente from "./components/SelecionarAgente";
 
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
           <Route path="/listar" element={<ListarContas />} />
           <Route path="/cadastrar" element={<Cadastrar />} />
           <Route path="/editar" element={<Editar />} />
-          <Route path="/selecionar-agente" element={<SelecionarAgente />} />
           <Route path="/crud-catalogo" element={<EditarCatalogo />} />
           <Route path="/crud-produto" element={<EditarProduto />} />
           <Route path="/crud-adicional" element={<EditarAdicional />} />
