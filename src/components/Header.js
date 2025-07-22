@@ -21,12 +21,11 @@ export default function Header() {
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                 {/* Menu da esquerda */}
                 <nav>
-                    <Link to="/listar" style={linkStyle}>Listar Contas</Link>
-                    <Link to="/cadastrar" style={linkStyle}>Cadastrar Conta</Link>
-                    <Link to="/editar" style={linkStyle}>Editar Conta</Link>
                     <Link to="/crud-catalogo" style={linkStyle}>Catalogos</Link>
                     <Link to="/crud-produto" style={linkStyle}>Produtos</Link>
                     <Link to="/crud-adicional" style={linkStyle}>Adicionais</Link>
+                    <Link to="/crud-horario" style={linkStyle}>Horários</Link>
+                    <Link to="/editar" style={linkStyle}>Usuarios</Link>
                 </nav>
 
                 {/* Botão de sair alinhado à direita */}

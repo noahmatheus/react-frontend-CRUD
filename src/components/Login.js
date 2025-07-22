@@ -14,7 +14,10 @@ function Login() {
         try {
             const res = await fetch("https://renderproject-deploy.onrender.com/login", {
                 method: "POST",
-                body: JSON.stringify({ email, pass }),
+                //             headers: {
+                //     "Content-Type": "application/json", // ✅ volte com isso
+                // },
+                body: JSON.stringify({ email: email.toLowerCase(), pass }),
             });
 
             const contentType = res.headers.get("Content-Type");
@@ -64,8 +67,7 @@ function Login() {
                     <input
                         type="text"
                         value={email}
-                        // placeholder="Usuário"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)} // Não força lowercase no input
                         required
                         style={{
                             width: "100%",
