@@ -21,6 +21,7 @@ export default function Header() {
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                 {/* Menu da esquerda */}
                 <nav>
+                    <Link to="/pedidos" style={linkStyle}>Pedidos</Link>
                     <Link to="/crud-catalogo" style={linkStyle}>Catalogos</Link>
                     <Link to="/crud-produto" style={linkStyle}>Produtos</Link>
                     <Link to="/crud-adicional" style={linkStyle}>Adicionais</Link>

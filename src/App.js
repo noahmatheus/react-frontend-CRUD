@@ -7,6 +7,7 @@ import EditarHorario from "./components/EditarHorario";
 import EditarProduto from "./components/EditarProduto";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
+import ListarPedidos from "./components/ListarPedidos";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/crud-adicional" element={<EditarAdicional />} />
           <Route path="/crud-horario" element={<EditarHorario />} />
           <Route path="/editar" element={<Editar />} />
+          <Route path="/pedidos" element={<ListarPedidos />} />
         </Route>
 
         {/* Qualquer rota não encontrada → redireciona para login */}
