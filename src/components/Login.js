@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [erro, setErro] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,10 +14,7 @@ function Login() {
         try {
             const res = await fetch("https://renderproject-deploy.onrender.com/login", {
                 method: "POST",
-                //             headers: {
-                //     "Content-Type": "application/json", // ✅ volte com isso
-                // },
-                body: JSON.stringify({ email: email.toLowerCase(), pass }),
+                body: JSON.stringify({ email, pass }),
             });
 
             const contentType = res.headers.get("Content-Type");
@@ -33,7 +32,7 @@ function Login() {
                 const token = data.token || data.access_token;
                 if (token) {
                     localStorage.setItem("token", token);
-                    window.location.href = "/#/"; // Redireciona corretamente para Home com HashRouter
+                    navigate("/"); // Volta a usar navigate para redirecionar
                 } else {
                     setErro("Nome de usuário ou Senha inválidos.");
                 }
@@ -65,7 +64,7 @@ function Login() {
                     <input
                         type="text"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)} // Não força lowercase no input
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{
                             width: "100%",
@@ -84,7 +83,6 @@ function Login() {
                     <input
                         type="password"
                         value={pass}
-                        // placeholder="Senha"
                         onChange={(e) => setPass(e.target.value)}
                         required
                         style={{
@@ -124,7 +122,6 @@ function Login() {
             )}
         </div>
     );
-
 }
 
 export default Login;
