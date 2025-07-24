@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-frontend-CRUD/static/js/main.b97aa32a.js",
+    "main.js": "/react-frontend-CRUD/static/js/main.8d2bb3ff.js",
     "index.html": "/react-frontend-CRUD/index.html",
-    "main.b97aa32a.js.map": "/react-frontend-CRUD/static/js/main.b97aa32a.js.map"
+    "main.8d2bb3ff.js.map": "/react-frontend-CRUD/static/js/main.8d2bb3ff.js.map"
   },
   "entrypoints": [
-    "static/js/main.b97aa32a.js"
+    "static/js/main.8d2bb3ff.js"
   ]
 }
