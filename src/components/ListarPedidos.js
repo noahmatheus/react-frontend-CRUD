@@ -27,7 +27,7 @@ function ListarPedidos() {
 
   useEffect(() => {
     carregarPedidos();
-    const interval = setInterval(carregarPedidos, 10000); // Atualiza a cada 10 segundos
+    const interval = setInterval(carregarPedidos, 30000); // Atualiza a cada 30 segundos
     return () => clearInterval(interval);
   }, []);
 

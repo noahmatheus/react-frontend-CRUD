@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ importar o hook
 
 function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [erro, setErro] = useState("");
-    const navigate = useNavigate(); // ✅ instanciar o hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +33,7 @@ function Login() {
                 const token = data.token || data.access_token;
                 if (token) {
                     localStorage.setItem("token", token);
-                    navigate("/"); // ✅ redireciona para página inicial
+                    window.location.href = "/#/"; // Redireciona corretamente para Home com HashRouter
                 } else {
                     setErro("Nome de usuário ou Senha inválidos.");
                 }
