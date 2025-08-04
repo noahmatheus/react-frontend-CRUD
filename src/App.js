@@ -3,6 +3,7 @@ import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import Editar from "./components/Editar";
 import EditarAdicional from "./components/EditarAdicional";
 import EditarCatalogo from "./components/EditarCatalogo";
+import EditarConfiguracao from "./components/EditarConfiguracao";
 import EditarHorario from "./components/EditarHorario";
 import EditarProduto from "./components/EditarProduto";
 import Home from "./components/Home";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/crud-horario" element={<EditarHorario />} />
           <Route path="/editar" element={<Editar />} />
           <Route path="/pedidos" element={<ListarPedidos />} />
+          <Route path="/configuracao" element={<EditarConfiguracao />} />
         </Route>
 
         {/* Qualquer rota não encontrada → redireciona para login */}

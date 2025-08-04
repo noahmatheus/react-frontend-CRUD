@@ -1,5 +1,5 @@
 // src/components/Header.js
-import { FaBoxes, FaBoxOpen, FaClipboardList, FaClock, FaPlusCircle, FaUsers } from "react-icons/fa";
+import { FaBoxes, FaBoxOpen, FaClipboardList, FaClock, FaCog, FaPlusCircle, FaUsers } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -35,6 +35,7 @@ export default function Header() {
                     <Link to="/crud-adicional" style={navLinkStyle}><FaPlusCircle style={iconStyle}/>Adicionais</Link>
                     <Link to="/crud-horario" style={navLinkStyle}><FaClock style={iconStyle}/>Horários</Link>
                     <Link to="/editar" style={navLinkStyle}><FaUsers style={iconStyle}/>Usuários</Link>
+                    <Link to="/configuracao" style={navLinkStyle}><FaCog style={iconStyle}/>Configuração</Link>
                 </nav>
                 {/* Botão de sair alinhado à direita */}
                 <button
