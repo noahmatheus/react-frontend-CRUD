@@ -54,11 +54,6 @@ function EditarAdicional() {
         setModo("editar");
     };
 
-    const selecionarParaExcluir = (adicional) => {
-        setAdicionalSelecionado(adicional);
-        setModo("excluir");
-    };
-
     const iniciarCadastro = () => {
         setAdicionalSelecionado(null);
         setModo("cadastrar");
@@ -160,57 +155,49 @@ function EditarAdicional() {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Valor</th>
-                                <th>Catálogo</th> {/* Coluna nova para mostrar o nome */}
+                                <th>Descrição</th>
+                                <th>Preço</th>
+                                <th>Exibir</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {adicionalFiltrados.map(adicional => {
-                                // Busca o nome do catálogo pelo id_catalogo do produto
-                                const catalogoNome = catalogos.find(c => c.id_catalogo === adicional.catalogo_temp)?.nome || "Não definido";
-
-                                return (
-                                    <tr key={adicional.id_adicional}>
-                                        <td>{adicional.id_adicional}</td>
-                                        <td>{adicional.nome}</td>
-                                        <td>{adicional.valor?.toFixed(2)}</td>
-                                        <td>{catalogoNome}</td>
-                                        <td>
-                                            <button
-                                                onClick={() => selecionarParaEditar(adicional)}
-                                                style={{
-                                                    backgroundColor: "#007bff",
-                                                    color: "#fff",
-                                                    padding: "6px 12px",
-                                                    border: "none",
-                                                    borderRadius: "4px",
-                                                    cursor: "pointer",
-                                                    marginRight: "8px",
-                                                    fontSize: "14px"
-                                                }}
-                                            >
-                                                Editar
-                                            </button>
-
-                                            <button
-                                                onClick={() => selecionarParaExcluir(adicional)}
-                                                style={{
-                                                    backgroundColor: "#dc3545",
-                                                    color: "#fff",
-                                                    padding: "6px 12px",
-                                                    border: "none",
-                                                    borderRadius: "4px",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px"
-                                                }}
-                                            >
-                                                Excluir
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                            {adicionalFiltrados.map(adicional => (
+                                <tr key={adicional.id_adicional}>
+                                    <td>{adicional.id_adicional}</td>
+                                    <td>{adicional.nome}</td>
+                                    <td>{adicional.descricao}</td>
+                                    <td>R$ {Number(adicional.valor || 0).toFixed(2)}</td>
+                                    <td>
+                                        <span style={{
+                                            padding: "4px 8px",
+                                            borderRadius: "12px",
+                                            fontSize: "12px",
+                                            fontWeight: "600",
+                                            background: adicional.exibir ? "#d4edda" : "#f8d7da",
+                                            color: adicional.exibir ? "#155724" : "#721c24"
+                                        }}>
+                                            {adicional.exibir ? "Sim" : "Não"}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button
+                                            onClick={() => selecionarParaEditar(adicional)}
+                                            style={{
+                                                backgroundColor: "#007bff",
+                                                color: "#fff",
+                                                padding: "6px 12px",
+                                                border: "none",
+                                                borderRadius: "4px",
+                                                cursor: "pointer",
+                                                fontSize: "14px"
+                                            }}
+                                        >
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                             {adicionalFiltrados.length === 0 && (
                                 <tr>
                                     <td colSpan="5" style={{ textAlign: "center", padding: "10px" }}>

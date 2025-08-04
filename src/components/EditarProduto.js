@@ -54,11 +54,6 @@ function EditarProduto() {
         setModo("editar");
     };
 
-    const selecionarParaExcluir = (produto) => {
-        setProdutoSelecionado(produto);
-        setModo("excluir");
-    };
-
     const iniciarCadastro = () => {
         setProdutoSelecionado(null);
         setModo("cadastrar");
@@ -171,59 +166,51 @@ function EditarProduto() {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Valor</th>
                                 <th>Descrição</th>
-                                <th>Catálogo</th> {/* Coluna nova para mostrar o nome */}
+                                <th>Preço</th>
+                                <th>Categoria</th>
+                                <th>Exibir</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {produtosFiltradas.map(produto => {
-                                // Busca o nome do catálogo pelo id_catalogo do produto
-                                const catalogoNome = catalogos.find(c => c.id_catalogo === produto.catalogo_temp)?.nome || "Não definido";
-
-                                return (
-                                    <tr key={produto.id_produto}>
-                                        <td>{produto.id_produto}</td>
-                                        <td>{produto.nome}</td>
-                                        <td>{produto.valor?.toFixed(2)}</td>
-                                        <td>{produto.descricao}</td>
-                                        <td>{catalogoNome}</td>
-                                        <td>
-                                            <button
-                                                onClick={() => selecionarParaEditar(produto)}
-                                                style={{
-                                                    backgroundColor: "#007bff",
-                                                    color: "#fff",
-                                                    padding: "6px 12px",
-                                                    border: "none",
-                                                    borderRadius: "4px",
-                                                    cursor: "pointer",
-                                                    marginRight: "8px",
-                                                    fontSize: "14px"
-                                                }}
-                                            >
-                                                Editar
-                                            </button>
-
-                                            <button
-                                                onClick={() => selecionarParaExcluir(produto)}
-                                                style={{
-                                                    backgroundColor: "#dc3545",
-                                                    color: "#fff",
-                                                    padding: "6px 12px",
-                                                    border: "none",
-                                                    borderRadius: "4px",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px"
-                                                }}
-                                            >
-                                                Excluir
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                            {produtosFiltradas.map(produto => (
+                                <tr key={produto.id_produto}>
+                                    <td>{produto.id_produto}</td>
+                                    <td>{produto.nome}</td>
+                                    <td>{produto.descricao}</td>
+                                    <td>R$ {Number(produto.valor || 0).toFixed(2)}</td>
+                                    <td>{produto.categoria}</td>
+                                    <td>
+                                        <span style={{
+                                            padding: "4px 8px",
+                                            borderRadius: "12px",
+                                            fontSize: "12px",
+                                            fontWeight: "600",
+                                            background: produto.exibir ? "#d4edda" : "#f8d7da",
+                                            color: produto.exibir ? "#155724" : "#721c24"
+                                        }}>
+                                            {produto.exibir ? "Sim" : "Não"}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button
+                                            onClick={() => selecionarParaEditar(produto)}
+                                            style={{
+                                                backgroundColor: "#007bff",
+                                                color: "#fff",
+                                                padding: "6px 12px",
+                                                border: "none",
+                                                borderRadius: "4px",
+                                                cursor: "pointer",
+                                                fontSize: "14px"
+                                            }}
+                                        >
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                             {produtosFiltradas.length === 0 && (
                                 <tr>
                                     <td colSpan="6" style={{ textAlign: "center", padding: "10px" }}>

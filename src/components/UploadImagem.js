@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function UploadImagem({ tipo, idConfiguracao, onUploadSuccess }) {
     const [arquivo, setArquivo] = useState(null);
@@ -8,7 +8,7 @@ function UploadImagem({ tipo, idConfiguracao, onUploadSuccess }) {
     const [imagemAtual, setImagemAtual] = useState(null);
 
     // Buscar imagens disponíveis
-    const buscarImagens = async () => {
+    const buscarImagens = useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
             const res = await fetch("https://renderproject-deploy.onrender.com/api/configuracao/imagens", {
@@ -33,11 +33,11 @@ function UploadImagem({ tipo, idConfiguracao, onUploadSuccess }) {
         } catch (err) {
             console.error("Erro ao buscar imagens:", err);
         }
-    };
+    }, [tipo]);
 
     useEffect(() => {
         buscarImagens();
-    }, [tipo]);
+    }, [buscarImagens]);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];

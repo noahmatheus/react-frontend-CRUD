@@ -2,31 +2,31 @@ import React, { useMemo, useState } from "react";
 import PedidoCard from "./PedidoCard";
 
 const COLUMNS = [
-    { key: "NOVO_EM_PREPARO", label: "Novo / Em Preparo", status: ["NOVO", "EM_PREPARO"], editable: true },
-    { key: "PRONTO", label: "Pronto", status: ["PRONTO"], editable: false },
-    { key: "FINALIZADO_CANCELADO", label: "Finalizado / Cancelado", status: ["FINALIZADO", "CANCELADO"], editable: false }
+    { key: "NOVO_EM_PREPARO", label: "Novo / Em Preparo", status: ["NOVO", "EM_PREPARO"] },
+    { key: "PRONTO", label: "Pronto", status: ["PRONTO"] },
+    { key: "FINALIZADO_CANCELADO", label: "Finalizado / Cancelado", status: ["FINALIZADO", "CANCELADO"] }
 ];
 
 const PAGE_SIZE = 8;
 
-function PedidosBoard({ pedidos, onStatusChange, isUpdating }) {
-    // Paginação por coluna
-    const [pages, setPages] = useState(
-        COLUMNS.reduce((acc, col) => ({ ...acc, [col.key]: 1 }), {})
-    );
+function PedidosBoard({ pedidos, onStatusChange, isUpdating, onModalStateChange }) {
+    const [pages, setPages] = useState(COLUMNS.reduce((acc, col) => ({ ...acc, [col.key]: 1 }), {}));
 
     const pedidosPorColuna = useMemo(() => {
-        const map = {};
+        const resultado = {};
         COLUMNS.forEach(col => {
-            map[col.key] = pedidos.filter(p => col.status.includes(p.status));
+            resultado[col.key] = pedidos.filter(pedido => col.status.includes(pedido.status));
         });
-        return map;
+        return resultado;
     }, [pedidos]);
 
-    const handlePageChange = (colKey, dir) => {
+    const handlePageChange = (colKey, direction) => {
         setPages(prev => ({
             ...prev,
-            [colKey]: Math.max(1, prev[colKey] + dir)
+            [colKey]: Math.max(1, Math.min(
+                prev[colKey] + direction,
+                Math.ceil(pedidosPorColuna[colKey].length / PAGE_SIZE)
+            ))
         }));
     };
 
@@ -37,28 +37,100 @@ function PedidosBoard({ pedidos, onStatusChange, isUpdating }) {
                 const page = pages[col.key];
                 const totalPages = Math.ceil(pedidosCol.length / PAGE_SIZE) || 1;
                 const paginated = pedidosCol.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
                 return (
-                    <div key={col.key} style={{ minWidth: 340, flex: 1, background: "#f7f7f7", borderRadius: 10, padding: 12, boxShadow: "0 1px 4px #0001" }}>
-                        <h3 style={{ textAlign: "center", margin: 0, marginBottom: 12 }}>{col.label}</h3>
+                    <div key={col.key} style={{
+                        minWidth: 320,
+                        background: "#ffffff",
+                        borderRadius: 12,
+                        padding: 20,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
+                        border: "1px solid #e9ecef"
+                    }}>
+                        <h3 style={{
+                            margin: "0 0 16px 0",
+                            fontSize: "18px",
+                            fontWeight: "600",
+                            color: "#333",
+                            textAlign: "center"
+                        }}>
+                            {col.label}
+                        </h3>
+
                         {paginated.length === 0 ? (
-                            <div style={{ color: "#aaa", textAlign: "center", marginTop: 32 }}>Nenhum pedido</div>
+                            <div style={{
+                                textAlign: "center",
+                                color: "#666",
+                                padding: "40px 20px",
+                                fontSize: "14px"
+                            }}>
+                                Nenhum pedido
+                            </div>
                         ) : (
-                            paginated.map(pedido => (
-                                <PedidoCard
-                                    key={pedido.id_pedido}
-                                    pedido={pedido}
-                                    onStatusChange={col.editable ? onStatusChange : undefined}
-                                    isUpdating={isUpdating === pedido.id_pedido && col.editable}
-                                    editable={col.editable}
-                                />
-                            ))
+                            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                                {paginated.map(pedido => (
+                                    <PedidoCard
+                                        key={pedido.id_pedido}
+                                        pedido={pedido}
+                                        onStatusChange={onStatusChange}
+                                        isUpdating={isUpdating === pedido.id_pedido}
+                                        onModalStateChange={onModalStateChange}
+                                    />
+                                ))}
+                            </div>
                         )}
-                        {/* Paginação */}
+
                         {totalPages > 1 && (
-                            <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 12 }}>
-                                <button onClick={() => handlePageChange(col.key, -1)} disabled={page === 1}>Anterior</button>
-                                <span>Página {page} de {totalPages}</span>
-                                <button onClick={() => handlePageChange(col.key, 1)} disabled={page === totalPages}>Próxima</button>
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                gap: 12,
+                                marginTop: 16,
+                                paddingTop: 16,
+                                borderTop: "1px solid #e9ecef"
+                            }}>
+                                <button
+                                    onClick={() => handlePageChange(col.key, -1)}
+                                    disabled={page === 1}
+                                    style={{
+                                        padding: "6px 12px",
+                                        border: "none",
+                                        borderRadius: "6px",
+                                        background: page === 1 ? "#f8f9fa" : "#6c757d",
+                                        color: page === 1 ? "#adb5bd" : "#ffffff",
+                                        cursor: page === 1 ? "not-allowed" : "pointer",
+                                        fontSize: "12px",
+                                        fontWeight: "600"
+                                    }}
+                                >
+                                    ← Anterior
+                                </button>
+                                
+                                <span style={{
+                                    fontSize: "14px",
+                                    color: "#495057",
+                                    fontWeight: "600"
+                                }}>
+                                    {page} de {totalPages}
+                                </span>
+                                
+                                <button
+                                    onClick={() => handlePageChange(col.key, 1)}
+                                    disabled={page === totalPages}
+                                    style={{
+                                        padding: "6px 12px",
+                                        border: "none",
+                                        borderRadius: "6px",
+                                        background: page === totalPages ? "#f8f9fa" : "#6c757d",
+                                        color: page === totalPages ? "#adb5bd" : "#ffffff",
+                                        cursor: page === totalPages ? "not-allowed" : "pointer",
+                                        fontSize: "12px",
+                                        fontWeight: "600"
+                                    }}
+                                >
+                                    Próxima →
+                                </button>
                             </div>
                         )}
                     </div>
