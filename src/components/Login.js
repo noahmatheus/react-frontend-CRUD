@@ -42,7 +42,7 @@ function Login() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "linear-gradient(135deg, #6c757d 0%, #495057 100%)",
+            background: "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)",
             fontFamily: "'Poppins', 'Segoe UI', Arial, sans-serif"
         }}>
             <div style={{
@@ -79,7 +79,7 @@ function Login() {
 
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                     <div>
-                        <label style={{
+                        {/* <label style={{
                             display: "block",
                             marginBottom: "8px",
                             color: "#333",
@@ -87,7 +87,7 @@ function Login() {
                             fontWeight: "500"
                         }}>
                             Email:
-                        </label>
+                        </label> */}
                         <input
                             type="text"
                             value={email}
@@ -115,7 +115,7 @@ function Login() {
                     </div>
 
                     <div>
-                        <label style={{
+                        {/* <label style={{
                             display: "block",
                             marginBottom: "8px",
                             color: "#333",
@@ -123,7 +123,7 @@ function Login() {
                             fontWeight: "500"
                         }}>
                             Senha:
-                        </label>
+                        </label> */}
                         <input
                             type="password"
                             value={pass}
